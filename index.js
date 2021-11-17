@@ -1,7 +1,10 @@
+alert("У вас есть 5 попыток");
 
-const randomWord = prompt("Введите загаданное слово!");
+const randomWord = prompt("Введите загаданное слово!").toLowerCase();
 
 let answerArray = [];
+
+let trials = 5;
 
 if (randomWord?.length > 0) {
   for (let i = 0; i < randomWord.length; i++) {
@@ -10,13 +13,17 @@ if (randomWord?.length > 0) {
 
   let remainingLetters = randomWord.length;
 
-  while (remainingLetters > 0) {
+  while (remainingLetters > 0 && trials > 0) {
     alert(answerArray.join(" "));
 
     let answer = prompt("Введите букву или нажмите отмена для выхода из игры");
 
     if (!randomWord.includes(answer) && answer) {
       alert("Ошибка! Вы не угадали!");
+      trials--;
+      if (trials === 0) {
+        alert("Израсходованы все попытки!");
+      }
       continue;
     }
 
@@ -29,7 +36,7 @@ if (randomWord?.length > 0) {
       answer = answer.toLowerCase();
 
       for (let j = 0; j < randomWord.length; j++) {
-        if (randomWord[j] === answer) {
+        if (randomWord[j] === answer && answerArray[j] === "_") {
           answerArray[j] = answer;
           remainingLetters--;
         }
